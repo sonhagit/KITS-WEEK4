@@ -68,3 +68,70 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int n = 3; // Kích thước của ma trận
+        int[,] matrix = GenerateSpiralMatrix(n);
+
+        // In ma trận hình xoắn ốc ra màn hình
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                Console.Write(matrix[i, j] + " ");
+            }
+            Console.WriteLine();
+        }
+    }
+
+    static int[,] GenerateSpiralMatrix(int n)
+    {
+        int[,] matrix = new int[n, n];
+        int num = 1;
+        int rowStart = 0, rowEnd = n - 1;
+        int colStart = 0, colEnd = n - 1;
+
+        while (rowStart <= rowEnd && colStart <= colEnd)
+        {
+            // Lặp từ trái sang phải ở hàng đầu tiên chưa được đi qua
+            for (int i = colStart; i <= colEnd; i++)
+            {
+                matrix[rowStart, i] = num++;
+            }
+            rowStart++;
+
+            // Lặp từ trên xuống ở cột cuối cùng chưa được đi qua
+            for (int i = rowStart; i <= rowEnd; i++)
+            {
+                matrix[i, colEnd] = num++;
+            }
+            colEnd--;
+
+            // Lặp từ phải sang trái ở hàng cuối cùng chưa được đi qua
+            if (rowStart <= rowEnd)
+            {
+                for (int i = colEnd; i >= colStart; i--)
+                {
+                    matrix[rowEnd, i] = num++;
+                }
+                rowEnd--;
+            }
+
+            // Lặp từ dưới lên ở cột đầu tiên chưa được đi qua
+            if (colStart <= colEnd)
+            {
+                for (int i = rowEnd; i >= rowStart; i--)
+                {
+                    matrix[i, colStart] = num++;
+                }
+                colStart++;
+            }
+        }
+
+        return matrix;
+    }
+}
